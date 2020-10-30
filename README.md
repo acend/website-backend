@@ -1,6 +1,6 @@
 # acend.ch website backend
 
-Backend for Mailchimp newsletter subscription and form submissions on acend.ch
+Backend for acend.ch website: Mailchimp newsletter subscription and form submissions
 
 ## Configuration
 
@@ -25,4 +25,4 @@ SMTP_TO
 
 ## Docker
 
-See `.Dockerfile` and make sure to set all expected env vars.
+See `Dockerfile` and make sure to set all expected env vars.
