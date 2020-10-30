@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: acend-website-backend
+  name: acend-website-backend
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: acend-website-backend
+  sessionAffinity: None
+  type: ClusterIP
