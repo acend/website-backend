@@ -51,10 +51,13 @@ func newsletterHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	email := req.PostFormValue("email")
-	err = mailchimp.Subscribe(email)
-	if err != nil {
-		log.Printf("mailchimp subscription for %s failed: %s", email, err)
-	}
+
+	go func() {
+		err = mailchimp.Subscribe(email)
+		if err != nil {
+			log.Printf("mailchimp subscription for %s failed: %s", email, err)
+		}
+	}()
 
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = fmt.Fprintf(w, `{"ok":true}`)
@@ -76,10 +79,12 @@ func formHandler(w http.ResponseWriter, req *http.Request) {
 		m[key] = req.PostFormValue(key)
 	}
 
-	err = form.Submit(m)
-	if err != nil {
-		log.Printf("form submission failed: %v", err)
-	}
+	go func() {
+		err = form.Submit(m)
+		if err != nil {
+			log.Printf("form submission failed: %v", err)
+		}
+	}()
 
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = fmt.Fprintf(w, `{"ok":true}`)
