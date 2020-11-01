@@ -33,7 +33,7 @@ func validateForm(req *http.Request) error {
 
 	err := req.ParseForm()
 	if err != nil {
-		return fmt.Errorf("could not parse form: %v", err)
+		return fmt.Errorf("parse form: %v", err)
 	}
 
 	if req.FormValue("fortytwo") != "" {
@@ -82,7 +82,7 @@ func formHandler(w http.ResponseWriter, req *http.Request) {
 	go func() {
 		err = form.Submit(m)
 		if err != nil {
-			log.Printf("form submission failed: %v", err)
+			log.Printf("error on form submission: %v", err)
 		}
 	}()
 

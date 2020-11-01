@@ -23,6 +23,7 @@ func Submit(fields map[string]string) error {
 	m.SetBody("text/html", str.String())
 
 	d := gomail.NewDialer(cfg.Host, cfg.Port, cfg.Username, cfg.Password)
+	d.LocalName = "acend.ch"
 	err := d.DialAndSend(m)
 	if err != nil {
 		return fmt.Errorf("send mail: %w", err)

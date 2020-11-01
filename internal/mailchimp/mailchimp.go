@@ -21,7 +21,7 @@ func Subscribe(email string) error {
 
 	list, err := client.GetList(listID, nil)
 	if err != nil {
-		return fmt.Errorf("failed to get mailchimp list %s: %w", listID, err)
+		return fmt.Errorf("get mailchimp list %s: %w", listID, err)
 	}
 
 	id := fmt.Sprintf("%x", md5.Sum([]byte(strings.ToLower(email))))
@@ -31,7 +31,7 @@ func Subscribe(email string) error {
 		apiErr, ok := err.(*gochimp3.APIError)
 
 		if !ok && apiErr.Status != http.StatusNotFound {
-			return fmt.Errorf("failed to get mailchimp member %s: %w", email, err)
+			return fmt.Errorf("get mailchimp member %s: %w", email, err)
 		}
 	}
 
@@ -47,7 +47,7 @@ func Subscribe(email string) error {
 
 	_, err = list.AddOrUpdateMember(id, req)
 	if err != nil {
-		return fmt.Errorf("failed to subscribe %s to mailchimp list: %w", email, err)
+		return fmt.Errorf("subscribe %s to mailchimp list: %w", email, err)
 	}
 	log.Printf("subscribed %s to mailchimp list", email)
 
