@@ -3,7 +3,7 @@ module backend
 go 1.15
 
 require (
-	github.com/hanzoai/gochimp3 v0.0.0-20200804181350-ac0caad296d3
+	github.com/hanzoai/gochimp3 ca44eea46a51
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/prometheus/client_golang v1.8.0
 	github.com/stretchr/testify v1.6.1 // indirect
