@@ -4,7 +4,7 @@ import (
 	"backend/internal/config"
 	"crypto/md5"
 	"fmt"
-	"github.com/hanzoai/gochimp3"
+	"github.com/tw1nk/gochimp3"
 	"log"
 	"net/http"
 	"strings"

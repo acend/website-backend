@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN go get -v ./...
-RUN go build ./cmd/backend
+RUN go build
 
 FROM alpine
 COPY --from=build /app/backend /usr/local/bin
