@@ -1,9 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    keel.sh/policy: "force"
-    keel.sh/match-tag: "true"
   labels:
     app: acend-website-backend
   name: acend-website-backend
@@ -24,7 +21,7 @@ spec:
     spec:
       containers:
       - name: acend-website
-        image: acend/website-backend
+        image: quay.io/acend/website-backend:latest
         imagePullPolicy: Always
         env:
           - name: SMTP_HOST

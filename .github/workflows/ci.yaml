@@ -24,4 +24,18 @@ jobs:
           tags: quay.io/acend/website-backend
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+      - 
+        name: Apply Manifests
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBECONFIG_BASE64 }}
+        with:
+          args: apply -f ./k8s-config/ --namespace acend-website
+      - 
+        name: Redeploy Prod Deployment
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBECONFIG_BASE64 }}
+        with:
+          args: rollout restart deployment/acend-website-backend --namespace acend-website
 
