@@ -32,12 +32,14 @@ func validateForm(req *http.Request) error {
 	}
 
 	err := req.ParseForm()
+	log.Printf("form contents: %s", req.PostForm)
+
 	if err != nil {
 		return fmt.Errorf("parse form: %v", err)
 	}
 
-	if req.FormValue("fortytwo") != "" {
-		return fmt.Errorf("hidden form field is set, gonna ditch this form: %v", req.PostForm)
+	if req.FormValue("url") != "" || req.FormValue("human") != "8" {
+		return fmt.Errorf("form submission is probably spam, gonna ditch it")
 	}
 
 	return nil
@@ -72,7 +74,7 @@ func formHandler(w http.ResponseWriter, req *http.Request) {
 
 	m := make(map[string]string)
 	for key := range req.PostForm {
-		if key == "fortytwo" {
+		if key == "url" || key == "human" {
 			continue
 		}
 
