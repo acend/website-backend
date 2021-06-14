@@ -24,7 +24,7 @@ func healthHandler(w http.ResponseWriter, req *http.Request) {
 	_, _ = fmt.Fprintf(w, "ok")
 }
 
-func validateForm(req *http.Request) error {
+func validateForm(req *http.Request, isNewsletter bool) error {
 	log.Printf("got a request: %v", req)
 
 	if req.Method != http.MethodPost {
@@ -38,7 +38,8 @@ func validateForm(req *http.Request) error {
 		return fmt.Errorf("parse form: %v", err)
 	}
 
-	if req.FormValue("url") != "" || req.FormValue("human") != "8" {
+	if req.FormValue("url") != "" ||
+		(!isNewsletter && req.FormValue("human") != "8") {
 		return fmt.Errorf("form submission is probably spam, gonna ditch it")
 	}
 
@@ -46,7 +47,7 @@ func validateForm(req *http.Request) error {
 }
 
 func newsletterHandler(w http.ResponseWriter, req *http.Request) {
-	err := validateForm(req)
+	err := validateForm(req, true)
 	if err != nil {
 		log.Printf("form validation failed: %s", err)
 		returnOK(w)
@@ -66,7 +67,7 @@ func newsletterHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func formHandler(w http.ResponseWriter, req *http.Request) {
-	err := validateForm(req)
+	err := validateForm(req, false)
 	if err != nil {
 		log.Printf("form validation failed: %s", err)
 		returnOK(w)
