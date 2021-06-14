@@ -49,6 +49,7 @@ func newsletterHandler(w http.ResponseWriter, req *http.Request) {
 	err := validateForm(req)
 	if err != nil {
 		log.Printf("form validation failed: %s", err)
+		returnOK(w)
 		return
 	}
 
@@ -61,14 +62,14 @@ func newsletterHandler(w http.ResponseWriter, req *http.Request) {
 		}
 	}()
 
-	w.Header().Set("Content-Type", "application/json")
-	_, _ = fmt.Fprintf(w, `{"ok":true}`)
+	returnOK(w)
 }
 
 func formHandler(w http.ResponseWriter, req *http.Request) {
 	err := validateForm(req)
 	if err != nil {
 		log.Printf("form validation failed: %s", err)
+		returnOK(w)
 		return
 	}
 
@@ -88,6 +89,10 @@ func formHandler(w http.ResponseWriter, req *http.Request) {
 		}
 	}()
 
+	returnOK(w)
+}
+
+func returnOK(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = fmt.Fprintf(w, `{"ok":true}`)
 }
