@@ -8,6 +8,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func Start() {
@@ -41,6 +42,13 @@ func validateForm(req *http.Request, isNewsletter bool) error {
 	if req.FormValue("url") != "" ||
 		(!isNewsletter && req.FormValue("human") != "8") {
 		return fmt.Errorf("form submission is probably spam, gonna ditch it")
+	}
+
+	for k := range req.PostForm {
+		v := req.PostFormValue(k)
+		if strings.Contains(v, "http://") {
+			return fmt.Errorf("form field %v contains an http (not https) link which is probably spam", k)
+		}
 	}
 
 	return nil
