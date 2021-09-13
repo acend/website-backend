@@ -39,8 +39,7 @@ func validateForm(req *http.Request, isNewsletter bool) error {
 		return fmt.Errorf("parse form: %v", err)
 	}
 
-	if req.FormValue("url") != "" ||
-		(!isNewsletter && req.FormValue("human") != "8") {
+	if req.FormValue("url") != "" {
 		return fmt.Errorf("form submission is probably spam, gonna ditch it")
 	}
 
