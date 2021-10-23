@@ -46,12 +46,12 @@ func validateForm(req *http.Request, isNewsletter bool) error {
 	for k := range req.PostForm {
 		v := req.PostFormValue(k)
 
-		if strings.Contains(v, "http://") {
-			return fmt.Errorf("form field %v contains an http (not https) link which is probably spam", k)
+		if strings.Contains(v, "http") {
+			return fmt.Errorf("form field %v contains a link, which is probably spam", k)
 		}
 
-		if strings.Contains(v, "//bit.ly/") {
-			return fmt.Errorf("form field %v contains a bit.ly link which is probably spam", k)
+		if strings.Contains(v, "www.") {
+			return fmt.Errorf("form field %v contains a link, which is probably spam", k)
 		}
 	}
 
