@@ -40,7 +40,11 @@ func validateForm(req *http.Request, isNewsletter bool) error {
 	}
 
 	if req.FormValue("url") != "" {
-		return fmt.Errorf("form submission is probably spam, gonna ditch it")
+		return fmt.Errorf("form fiels url is not empty, which is probably spam")
+	}
+
+	if len(req.PostForm) == 0 {
+		return fmt.Errorf("form is empty, which is probably spam")
 	}
 
 	for k := range req.PostForm {
