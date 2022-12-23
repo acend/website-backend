@@ -54,6 +54,10 @@ func validateForm(req *http.Request, isNewsletter bool) error {
 			return fmt.Errorf("required form field email is empty, which is probably spam")
 		}
 
+		if k == "nachricht" && v == "" {
+			return fmt.Errorf("main message field is empty, which is probably spam")
+		}
+
 		if strings.Contains(v, "http") {
 			return fmt.Errorf("form field %v contains a link, which is probably spam", k)
 		}
